@@ -1,8 +1,32 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
+  "sourceRoot": "apps/nestjs-ts-saas-starter/src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/nestjs-ts-saas-starter/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/nestjs-ts-saas-starter",
+  "projects": {
+    "nestjs-ts-saas-starter": {
+      "type": "application",
+      "root": "apps/nestjs-ts-saas-starter",
+      "entryFile": "main",
+      "sourceRoot": "apps/nestjs-ts-saas-starter/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/nestjs-ts-saas-starter/tsconfig.app.json"
+      }
+    },
+    "notification": {
+      "type": "application",
+      "root": "apps/notification",
+      "entryFile": "main",
+      "sourceRoot": "apps/notification/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/notification/tsconfig.app.json"
+      }
+    }
   }
 }
