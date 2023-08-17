@@ -99,4 +99,7 @@ storybook-static/
 # Jest
 .jest-test-results.json
 
+# Docker
+docker-compose.local.yml
+
 note*.txt
