@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
@@ -5,6 +6,7 @@ import { UserModule } from './user.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(UserModule);
+  app.useGlobalPipes(new ValidationPipe());
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.REDIS,
     options: {

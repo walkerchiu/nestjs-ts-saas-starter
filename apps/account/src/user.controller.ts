@@ -1,5 +1,15 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+} from '@nestjs/common';
 
+import { validate } from 'class-validator';
+
+import { CreateUserDto, AuthenticateUserDto } from './user.dto';
 import { UserEntity } from './user.entity';
 import { UserService } from './user.service';
 
@@ -13,16 +23,24 @@ export class UserController {
   }
 
   @Post('authenticate')
-  authenticate(
-    @Body() userDto: { email: string; password: string },
+  async authenticate(
+    @Body() userDto: AuthenticateUserDto,
   ): Promise<UserEntity> {
+    const errors = await validate(userDto);
+    if (errors.length > 0) {
+      throw new BadRequestException(errors);
+    }
+
     return this.userService.authenticate(userDto);
   }
 
   @Post()
-  create(
-    @Body() userDto: { name: string; email: string; password: string },
-  ): Promise<UserEntity> {
+  async create(@Body() userDto: CreateUserDto): Promise<UserEntity> {
+    const errors = await validate(userDto);
+    if (errors.length > 0) {
+      throw new BadRequestException(errors);
+    }
+
     return this.userService.create(userDto);
   }
 
